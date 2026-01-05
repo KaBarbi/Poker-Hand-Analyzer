@@ -41,3 +41,16 @@ The system should compute:
 - Monte Carlo simulation
 - CLI interface
 
+## Project Structure
+```
+poker/
+├── cards.py # Card representation and deck utilities
+├── hand_eval.py # Hand evaluation logic
+├── simulator.py # (future) Monte Carlo simulation
+├── main.py # (future) CLI interface
+├── test_cards.py
+└── test_hand_eval.py
+```
+
+
+
