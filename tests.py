@@ -1,5 +1,5 @@
 from cards import create_deck, card_to_value, remove_known_cards
-from hand_ev import evaluate_hand, ONE_PAIR, HIGH_CARD
+from hand_ev import evaluate_hand, ONE_PAIR, HIGH_CARD, TWO_PAIR
 
 if __name__ == "__main__":
     deck = create_deck()
@@ -10,8 +10,8 @@ if __name__ == "__main__":
     print(len(deck))
     print(card_to_value('AS') in deck)
     print(card_to_value('10H') in deck)
-    
-    
+
+
 from hand_ev import evaluate_hand, ONE_PAIR, HIGH_CARD
 
 cards = [
@@ -34,3 +34,12 @@ assert tb[0] == 14
 
 print("OK")
 
+cards = [
+    (14, 0), (14, 1),
+    (10, 2), (10, 3),
+    (7, 0), (4, 1), (2, 2)
+]
+
+rank, tb = evaluate_hand(cards)
+assert rank == TWO_PAIR
+assert tb == [14, 10, 7]

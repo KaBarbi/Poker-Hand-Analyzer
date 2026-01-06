@@ -1,6 +1,6 @@
 # 52 Cards
 # value: 2-14 (where 14 = Ace)
-# suit: 'H', 'D', 'C', 'S'
+# suit: 0–3
 # ('A', 'S') → (14, 'S')
 
 def card_to_value(card):
