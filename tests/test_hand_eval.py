@@ -11,6 +11,8 @@ from hand_ev import (
     THREE_KIND,
     STRAIGHT,
     FLUSH,
+    FULL_HOUSE,
+    FOUR_KIND,
 )
 
 def test_high_card():
@@ -86,6 +88,37 @@ def test_flush():
     rank, tb = evaluate_hand(cards)
     assert rank == FLUSH
     assert tb == [14, 11, 9, 7, 2]
+    
+def test_full_house():
+    cards = [
+        (13, 0), (13, 1), (13, 2),  # KKK
+        (10, 0), (10, 1),           # TT
+        (5, 2), (2, 3)
+    ]
+    rank, tb = evaluate_hand(cards)
+    assert rank == FULL_HOUSE
+    assert tb == [13, 10]
+
+
+def test_full_house_two_trips():
+    cards = [
+        (12, 0), (12, 1), (12, 2),  # QQQ
+        (11, 0), (11, 1), (11, 2),  # JJJ
+        (2, 3)
+    ]
+    rank, tb = evaluate_hand(cards)
+    assert rank == FULL_HOUSE
+    assert tb == [12, 11]
+    
+def test_four_of_a_kind():
+    cards = [
+        (9, 0), (9, 1), (9, 2), (9, 3),  # 9999
+        (14, 0), (5, 1), (2, 2)
+    ]
+    rank, tb = evaluate_hand(cards)
+    assert rank == FOUR_KIND
+    assert tb == [9, 14]
+
 
 
 if __name__ == "__main__":

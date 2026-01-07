@@ -23,6 +23,25 @@ def evaluate_hand(cards):
     trips = get_trips(counts)
     pairs = get_pairs(counts)
 
+    # Four of a Kind
+    quads = [v for v, c in counts.items() if c == 4]
+    if quads:
+        quad_value = max(quads)
+        kicker = max(v for v in values if v != quad_value)
+        return (FOUR_KIND, [quad_value, kicker])
+
+    # Full House
+    trips = sorted([v for v, c in counts.items() if c == 3], reverse=True)
+    pairs = sorted([v for v, c in counts.items() if c == 2], reverse=True)
+
+    if trips and (pairs or len(trips) >= 2):
+        trip_value = trips[0]
+        if pairs:
+            pair_value = pairs[0]
+        else:
+            pair_value = trips[1]
+        return (FULL_HOUSE, [trip_value, pair_value])
+
     # Flush
     flush_values = get_flush_values(cards)
     if flush_values:
