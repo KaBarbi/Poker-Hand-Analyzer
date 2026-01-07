@@ -8,7 +8,8 @@ from hand_ev import (
     HIGH_CARD,
     ONE_PAIR,
     TWO_PAIR,
-    THREE_KIND
+    THREE_KIND,
+    STRAIGHT,
 )
 
 def test_high_card():
@@ -54,6 +55,26 @@ def test_three_of_a_kind():
     rank, tb = evaluate_hand(cards)
     assert rank == THREE_KIND
     assert tb == [12, 14, 10]
+
+
+def test_straight():
+    cards = [
+        (10, 0), (11, 1), (12, 2),
+        (13, 3), (14, 0), (3, 1), (2, 2)
+    ]
+    rank, tb = evaluate_hand(cards)
+    assert rank == STRAIGHT
+    assert tb == [14]
+
+
+def test_wheel_straight():
+    cards = [
+        (14, 0), (2, 1), (3, 2),
+        (4, 3), (5, 0), (9, 1), (13, 2)
+    ]
+    rank, tb = evaluate_hand(cards)
+    assert rank == STRAIGHT
+    assert tb == [5]
 
 
 if __name__ == "__main__":

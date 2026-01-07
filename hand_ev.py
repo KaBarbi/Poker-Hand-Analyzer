@@ -21,13 +21,23 @@ def evaluate_hand(cards):
     trips = get_trips(counts)
     pairs = get_pairs(counts)
 
-  # Three of a Kind
+    # Straight
+    straight_high = get_straight_high(values)
+    if straight_high:
+        return (STRAIGHT, [straight_high])
+
+    # Three of a Kind
+    trips = sorted(
+        [v for v, c in counts.items() if c == 3],
+        reverse=True
+    )
     if trips:
+        trip_value = trips[0]
         kickers = sorted(
-            [v for v in values if v != trips],
+            [v for v in values if v != trip_value],
             reverse=True
         )[:2]
-        return (THREE_KIND, [trips] + kickers)
+        return (THREE_KIND, [trip_value] + kickers)
 
     # Two Pair
     if len(pairs) >= 2:
@@ -66,4 +76,30 @@ def get_trips(counts):
     for value, count in counts.items():
         if count == 3:
             return value
+    return None
+
+
+def get_straight_high(values):
+    unique = set(values)
+
+    if 14 in unique:
+        unique.add(1)
+
+    sorted_vals = sorted(unique)
+
+    longest = []
+    current = []
+
+    for v in sorted_vals:
+        if not current or v == current[-1] + 1:
+            current.append(v)
+        else:
+            current = [v]
+
+        if len(current) >= 5:
+            longest = current[:]
+
+    if longest:
+        return max(longest)
+
     return None
