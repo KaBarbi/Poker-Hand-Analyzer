@@ -13,6 +13,7 @@ from hand_ev import (
     FLUSH,
     FULL_HOUSE,
     FOUR_KIND,
+    STRAIGHT_FLUSH,
 )
 
 def test_high_card():
@@ -119,6 +120,27 @@ def test_four_of_a_kind():
     assert rank == FOUR_KIND
     assert tb == [9, 14]
 
+
+def test_straight_flush():
+    cards = [
+        (10, 3), (11, 3), (12, 3),
+        (13, 3), (14, 3),  # 10-J-Q-K-A ♠
+        (2, 1), (5, 2)
+    ]
+    rank, tb = evaluate_hand(cards)
+    assert rank == STRAIGHT_FLUSH
+    assert tb == [14]
+
+
+def test_wheel_straight_flush():
+    cards = [
+        (14, 2), (2, 2), (3, 2),
+        (4, 2), (5, 2),   # A-2-3-4-5 ♣
+        (9, 1), (13, 3)
+    ]
+    rank, tb = evaluate_hand(cards)
+    assert rank == STRAIGHT_FLUSH
+    assert tb == [5]
 
 
 if __name__ == "__main__":

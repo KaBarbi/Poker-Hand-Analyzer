@@ -23,6 +23,11 @@ def evaluate_hand(cards):
     trips = get_trips(counts)
     pairs = get_pairs(counts)
 
+    # Straight Flush
+    sf_high = get_straight_flush_high(cards)
+    if sf_high:
+        return (STRAIGHT_FLUSH, [sf_high])
+
     # Four of a Kind
     quads = [v for v, c in counts.items() if c == 4]
     if quads:
@@ -85,6 +90,8 @@ def evaluate_hand(cards):
     return (HIGH_CARD, high_cards)
 
 
+# Auxliary Functions ->
+
 def get_pairs(counts):
     """
     Returns a list of pair values sorted descending.
@@ -142,3 +149,20 @@ def get_flush_values(cards):
             return sorted(values, reverse=True)[:5]
 
     return None
+
+
+def get_straight_flush_high(cards):
+    suits = defaultdict(list)
+
+    for value, suit in cards:
+        suits[suit].append(value)
+
+    best = None
+
+    for values in suits.values():
+        if len(values) >= 5:
+            high = get_straight_high(values)
+            if high and (best is None or high > best):
+                best = high
+
+    return best
