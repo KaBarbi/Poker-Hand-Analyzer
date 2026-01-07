@@ -1,4 +1,6 @@
-from collections import Counter
+from collections import Counter, defaultdict
+
+import cards
 
 # Hand ranks
 HIGH_CARD = 0
@@ -20,6 +22,11 @@ def evaluate_hand(cards):
 
     trips = get_trips(counts)
     pairs = get_pairs(counts)
+
+    # Flush
+    flush_values = get_flush_values(cards)
+    if flush_values:
+        return (FLUSH, flush_values)
 
     # Straight
     straight_high = get_straight_high(values)
@@ -101,5 +108,18 @@ def get_straight_high(values):
 
     if longest:
         return max(longest)
+
+    return None
+
+
+def get_flush_values(cards):
+    suits = defaultdict(list)
+
+    for value, suit in cards:
+        suits[suit].append(value)
+
+    for values in suits.values():
+        if len(values) >= 5:
+            return sorted(values, reverse=True)[:5]
 
     return None

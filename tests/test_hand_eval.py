@@ -10,6 +10,7 @@ from hand_ev import (
     TWO_PAIR,
     THREE_KIND,
     STRAIGHT,
+    FLUSH,
 )
 
 def test_high_card():
@@ -75,6 +76,16 @@ def test_wheel_straight():
     rank, tb = evaluate_hand(cards)
     assert rank == STRAIGHT
     assert tb == [5]
+    
+def test_flush():
+    cards = [
+        (14, 3), (11, 3), (9, 3),
+        (7, 3), (2, 3), (10, 1), (5, 2)
+    ]
+
+    rank, tb = evaluate_hand(cards)
+    assert rank == FLUSH
+    assert tb == [14, 11, 9, 7, 2]
 
 
 if __name__ == "__main__":
