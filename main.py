@@ -13,6 +13,7 @@ HAND_NAMES = {
     7: "Four of a Kind",
     8: "Straight Flush"
 }
+# suits exemple = ['H', 'D', 'C', 'S']  # Hearts, Diamonds, Clubs, Spades
 
 
 def main():
